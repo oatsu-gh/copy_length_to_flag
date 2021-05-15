@@ -10,7 +10,7 @@ from sys import argv
 import utaupy as up
 
 
-def copy_length_to_flag(plugin: up.utauplugin.UtauPlugin):
+def copy_length_to_flags(plugin: up.utauplugin.UtauPlugin):
     """ノート長をフラグに追記する
 
     Length=480(4分音符)で元のフラグが'g-2H40'のとき、
@@ -20,7 +20,7 @@ def copy_length_to_flag(plugin: up.utauplugin.UtauPlugin):
         note.flags = f'【{str(note.length)}】{str(note.flags)}'
 
 
-def delete_length_to_flag(plugin: up.utauplugin.UtauPlugin):
+def delete_length_to_flags(plugin: up.utauplugin.UtauPlugin):
     """フラグ内のLengthを消す
 
     '【480】g-2H40' -> 'g-2H40'
@@ -35,10 +35,10 @@ def main(plugin, mode):
     """動作を切り替えるラッパー
     """
     if mode == 'copy':
-        delete_length_to_flag(plugin)
-        copy_length_to_flag(plugin)
+        delete_length_to_flags(plugin)
+        copy_length_to_flags(plugin)
     elif mode == 'delete':
-        delete_length_to_flag(plugin)
+        delete_length_to_flags(plugin)
     else:
         raise ValueError('mode must be "copy" or "delete"')
 
