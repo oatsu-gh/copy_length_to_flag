@@ -1,0 +1,2 @@
+# copy_length_to_flag
+ UTAUのノート長をフラグ欄にコピーするプラグイン
