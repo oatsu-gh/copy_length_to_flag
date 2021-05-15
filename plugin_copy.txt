@@ -1,0 +1,3 @@
+name=フラグにノート長を書きこむ
+execute=.\copy_length_to_flags.bat
+ustversion=1.20
