@@ -9,11 +9,11 @@
 
 ### 「フラグからノート長を削除する」プラグイン
 
-`FFlags=【480】g-2H40` → `Flags=g-2H40`
+`Flags=【480】g-2H40` → `Flags=g-2H40`
 
-## 仕様
+## インストール
 
-pyファイルは共通で、plugin.txt によって呼び出すバッチファイルを切り替える。
+copy_length_to_flags.zip と delete_length_to_flags.zip をダウンロードしてインストールしてください。
 
 ## 開発環境
 
