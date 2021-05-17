@@ -2,7 +2,13 @@
 # Copyright (c) 2020 oatsu
 """UTAUのノート長をフラグにコピーする。調声晒しで長さがわかりやすそう。
 
-実行時のバッチファイルで、追加と削除を切り替える。
+## 仕様
+以下の機能を自動で切り替えます。
+
+- 全ノートのフラグにノート長が記入されている場合は、フラグからノート長を削除する。
+  - `Length=480` & `Flags=g-2H40` → `Flags=【480】g-2H40`
+- フラグにノート長が記入されていないノートが一つでもある場合は、ノート長を記入する。
+  - `Flags=【480】g-2H40` → `Flags=g-2H40`
 """
 import re
 from sys import argv
@@ -20,29 +26,31 @@ def copy_length_to_flags(plugin: up.utauplugin.UtauPlugin):
         note.flags = f'【{str(note.length)}】{str(note.flags)}'
 
 
-def delete_length_to_flags(plugin: up.utauplugin.UtauPlugin):
+def delete_length_to_flags(plugin: up.utauplugin.UtauPlugin, pattern: re.Pattern):
     """フラグ内のLengthを消す
 
     '【480】g-2H40' -> 'g-2H40'
     'g-2【480】H40' -> 'g-2H40'
     """
-    pattern = '【.*?】'
     for note in plugin.notes:
-        note.flags = re.sub(pattern, '', note.flags)
+        note.flags = pattern.sub('', note.flags)
 
 
-def main(plugin, mode):
-    """動作を切り替えるラッパー
+def main(plugin):
+    """自動で動作を切り替える。
+
+    - 全ノート(休符を除く)のフラグにノート長が記入されている場合は、フラグからノート長を削除する。
+    - フラグにノート長が記入されていないノート(休符を除く)が一つでもある場合は、ノート長を記入する。
     """
-    if mode == 'copy':
-        delete_length_to_flags(plugin)
-        copy_length_to_flags(plugin)
-    elif mode == 'delete':
-        delete_length_to_flags(plugin)
+    pattern = re.compile('【.*?】')
+    notes = plugin.notes
+    if all([note.lyric == 'R' or pattern.search(note.flags) for note in notes]):
+        delete_length_to_flags(plugin, pattern)
     else:
-        raise ValueError('mode must be "copy" or "delete"')
+        delete_length_to_flags(plugin, pattern)
+        copy_length_to_flags(plugin)
 
 
 if __name__ == '__main__':
     # `python copy_length_to_flags.py hogehoge.tmp --mode copy`
-    up.utauplugin.run(main, option=argv[3])
+    up.utauplugin.run(main)

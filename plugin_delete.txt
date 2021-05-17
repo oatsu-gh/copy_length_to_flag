@@ -1,3 +1,0 @@
-name=フラグからノート長を削除する
-execute=.\delete_length_to_flags.bat
-ustversion=1.20
