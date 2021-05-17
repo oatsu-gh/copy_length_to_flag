@@ -1,0 +1,4 @@
+type=editplugin
+folder=copy_length_to_flags
+contentsdir=copy_length_to_flags
+description=フラグからノート長をコピーする／削除するプラグイン
