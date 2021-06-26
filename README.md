@@ -2,6 +2,8 @@
 
 フラグにノート長をコピーする／削除するUTAUプラグイン
 
+**This repository has been moved to [utau_plugins](https://github.com/oatsu-gh/utau_plugins)**.
+
 ## インストール
 
 copy_length_to_flags.zip をダウンロードして、D&Dでインストールしてください。
